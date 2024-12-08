@@ -1,8 +1,9 @@
 /**
  * @file select.tsx
  * @description A customizable select component built with Radix UI primitives.
- * Provides accessible dropdown selection with custom styling.
  */
+
+"use client";
 
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';

@@ -26,7 +26,8 @@
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-slider": "^1.1.2"
+    "@radix-ui/react-slider": "^1.1.2",
+    "@supabase/supabase-js": "^2.39.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",

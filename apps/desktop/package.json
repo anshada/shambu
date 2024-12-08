@@ -10,13 +10,14 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@shambu/shared": "*",
+    "@shambu/shared": "workspace:*",
     "@supabase/supabase-js": "^2.39.0",
     "@tauri-apps/api": "^1.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "lucide-react": "^0.294.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.8",
