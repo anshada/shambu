@@ -9,7 +9,8 @@ import {
   Connection,
   DatabaseProfile,
   DatabaseSocialProfile,
-  DatabaseConnection
+  DatabaseConnection,
+  Json
 } from '@shambu/shared';
 
 /**
@@ -19,11 +20,11 @@ export function mapDatabaseProfile(dbProfile: DatabaseProfile): Profile {
   return {
     id: dbProfile.id,
     fullName: dbProfile.full_name,
-    email: dbProfile.email,
-    avatarUrl: dbProfile.avatar_url,
-    metadata: dbProfile.metadata,
-    socialProfiles: dbProfile.social_profiles?.map(mapDatabaseSocialProfile),
-    connections: dbProfile.connections?.map(mapDatabaseConnection),
+    email: dbProfile.email || undefined,
+    avatarUrl: dbProfile.avatar_url || undefined,
+    metadata: dbProfile.metadata as Record<string, any> || undefined,
+    socialProfiles: dbProfile.social_profiles?.map(mapDatabaseSocialProfile) || [],
+    connections: dbProfile.connections?.map(mapDatabaseConnection) || [],
     createdAt: new Date(dbProfile.created_at),
     updatedAt: new Date(dbProfile.updated_at)
   };
@@ -38,7 +39,7 @@ export function mapDatabaseSocialProfile(dbSocialProfile: DatabaseSocialProfile)
     platform: dbSocialProfile.platform,
     username: dbSocialProfile.username,
     url: dbSocialProfile.url,
-    metadata: dbSocialProfile.metadata,
+    metadata: dbSocialProfile.metadata as Record<string, any> || undefined,
     createdAt: new Date(dbSocialProfile.created_at),
     updatedAt: new Date(dbSocialProfile.updated_at)
   };
@@ -54,7 +55,7 @@ export function mapDatabaseConnection(dbConnection: DatabaseConnection): Connect
     targetId: dbConnection.target_id,
     type: dbConnection.connection_type,
     strength: dbConnection.strength,
-    metadata: dbConnection.metadata,
+    metadata: dbConnection.metadata as Record<string, any> || undefined,
     createdAt: new Date(dbConnection.created_at)
   };
 } 

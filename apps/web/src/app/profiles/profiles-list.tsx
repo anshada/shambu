@@ -1,9 +1,3 @@
-/**
- * @file page.tsx
- * @description Main profiles page component with search and management functionality.
- * Provides a grid view of profiles with real-time search and editing capabilities.
- */
-
 'use client';
 
 import * as React from 'react';
@@ -15,16 +9,15 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
 import { Profile, DatabaseProfile } from '@shambu/shared';
 import { mapDatabaseProfile } from '@/lib/utils/mappers';
-import type { Database } from '@/types/database';
 
-/**
- * ProfilesPage component for displaying and managing profiles
- */
-export default function ProfilesPage() {
-  const [profiles, setProfiles] = React.useState<Profile[]>([]);
+interface ProfilesListProps {
+  initialProfiles: Profile[];
+}
+
+export function ProfilesList({ initialProfiles }: ProfilesListProps) {
+  const [profiles, setProfiles] = React.useState<Profile[]>(initialProfiles);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [loading, setLoading] = React.useState(true);
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClientComponentClient();
 
   const fetchProfiles = React.useCallback(async () => {
     try {
@@ -38,18 +31,14 @@ export default function ProfilesPage() {
         .order('full_name');
 
       if (data) {
-        setProfiles(data.map(p => mapDatabaseProfile(p as DatabaseProfile)));
+        setProfiles(data.map((p: DatabaseProfile) => mapDatabaseProfile(p)));
       }
     } catch (error) {
       console.error('Error fetching profiles:', error);
-    } finally {
-      setLoading(false);
     }
   }, [supabase]);
 
   React.useEffect(() => {
-    fetchProfiles();
-
     const channel = supabase
       .channel('profiles')
       .on(
@@ -81,16 +70,6 @@ export default function ProfilesPage() {
       profile.metadata?.company?.toLowerCase().includes(query)
     );
   }, [profiles, searchQuery]);
-
-  if (loading) {
-    return (
-      <div className="container py-8">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container py-8">
