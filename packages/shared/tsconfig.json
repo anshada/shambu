@@ -1,7 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
@@ -12,19 +10,15 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "composite": true,
-    "noEmit": false,
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
     "strict": true,
-    "isolatedModules": true,
+    "composite": true,
     "incremental": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 } 

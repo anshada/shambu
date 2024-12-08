@@ -3,16 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['cjs', 'esm'],
-  dts: {
-    entry: {
-      index: 'src/index.ts'
-    },
-    resolve: true,
-    compilerOptions: {
-      incremental: true,
-      tsBuildInfoFile: './dist/.tsbuildinfo'
-    }
-  },
+  dts: false,
   clean: true,
   external: [
     '@radix-ui/react-slider',
@@ -24,7 +15,5 @@ export default defineConfig({
   treeshake: true,
   sourcemap: true,
   minify: false,
-  splitting: false,
-  skipNodeModulesBundle: true,
   outDir: 'dist'
 }); 
