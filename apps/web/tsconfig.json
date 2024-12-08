@@ -30,15 +30,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "../../packages/shared/src/types/index.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
-  ],
-  "references": [
-    {
-      "path": "../../packages/shared"
-    }
   ]
 } 
