@@ -1,7 +1,9 @@
 /**
- * @file utils.ts
+ * @file index.ts
  * @description Utility functions for the web application
  */
+
+export * from './mappers';
 
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';

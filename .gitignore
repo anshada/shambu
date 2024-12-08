@@ -52,7 +52,10 @@ apps/desktop/src-tauri/target/
 apps/mobile/ios/Pods/
 apps/mobile/android/.gradle/
 apps/mobile/android/app/build/
-
+apps/mobile/node_modules/
+apps/web/node_modules/
+apps/api/node_modules/
+apps/desktop/node_modules/
 # Supabase
 **/supabase/.temp/
 **/supabase/.branches/

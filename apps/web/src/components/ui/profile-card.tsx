@@ -1,20 +1,32 @@
+/**
+ * @file profile-card.tsx
+ * @description A card component for displaying profile information with connection management.
+ */
+
 import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 import { Card, CardContent, CardHeader } from './card';
-import { Profile } from '@shambu/shared/types';
-import { ExternalLink, Mail } from 'lucide-react';
+import { Profile, Connection, SocialProfile } from '@shambu/shared';
+import { ExternalLink, Mail, Network } from 'lucide-react';
 import Link from 'next/link';
+import { ManageConnectionsDialog } from '@/components/profile/manage-connections-dialog';
+import { Button } from './button';
 
 interface ProfileCardProps {
   profile: Profile;
   showActions?: boolean;
 }
 
+/**
+ * ProfileCard component for displaying profile information
+ */
 export function ProfileCard({ profile, showActions = true }: ProfileCardProps) {
   const initials = profile.fullName
     .split(' ')
-    .map(n => n[0])
+    .map((name: string) => name[0])
     .join('')
     .toUpperCase();
+
+  const visibleConnections = profile.connections?.slice(0, 3) ?? [];
 
   return (
     <Card className="w-full max-w-sm">
@@ -34,29 +46,65 @@ export function ProfileCard({ profile, showActions = true }: ProfileCardProps) {
         </div>
       </CardHeader>
       <CardContent>
+        {/* Connection Stats */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between text-sm text-gray-500">
+            <span>Connections</span>
+            <span>{profile.connections?.length ?? 0}</span>
+          </div>
+          {visibleConnections.length > 0 && (
+            <div className="mt-2">
+              <div className="flex gap-1">
+                {visibleConnections.map((connection: Connection) => (
+                  <div
+                    key={connection.id}
+                    className="h-2 flex-1 rounded-full bg-blue-100"
+                    style={{
+                      opacity: connection.strength
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         {showActions && (
-          <div className="mt-4 flex gap-2">
-            {profile.email && (
-              <Link
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
-              >
-                <Mail className="h-4 w-4" />
-                Email
-              </Link>
-            )}
-            {profile.socialProfiles?.map(social => (
-              <Link
-                key={social.url}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
-              >
-                <ExternalLink className="h-4 w-4" />
-                {social.platform}
-              </Link>
-            ))}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <ManageConnectionsDialog
+                profile={profile}
+                trigger={
+                  <Button variant="outline" size="sm" className="flex-1">
+                    <Network className="w-4 h-4 mr-2" />
+                    Manage Connections
+                  </Button>
+                }
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {profile.email && (
+                <Link
+                  href={`mailto:${profile.email}`}
+                  className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
+                >
+                  <Mail className="h-4 w-4" />
+                  Email
+                </Link>
+              )}
+              {profile.socialProfiles?.map((social: SocialProfile) => (
+                <Link
+                  key={social.url}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  {social.platform}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </CardContent>
